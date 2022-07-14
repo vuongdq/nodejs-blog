@@ -24,6 +24,13 @@
             <h2 class="wv-heading--subtitle">
                 Signin by VuongDQ
             </h2>
+            <div id="signupalert" style="<%if(!data ||!data.error){%>display: none;<%}%>" class="alert alert-danger">
+                <p>Error:</p>
+                <%if (data && data.error){%>
+                    <span><%= data.error %></span>
+                <%}%>
+
+            </div>
         </div>
     </div>
     <div class="row">
@@ -44,7 +51,7 @@
                     <div class="formgroup">
                         <div class="col-md-12 control">
                             Don't have an account!
-                            <a href="admin/signup">Signup here</a>
+                            <a href="/admin/signup">Signup here</a>
                         </div>
                     </div>
                 </form>

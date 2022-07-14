@@ -12,6 +12,7 @@ router.get("/signup",function (req, res){
     res.render("signup",{data:{}});
 
 });
+
 router.post("/signup",function (req, res) {
     var user = req.body;
     if(user.email.trim().length==0){
@@ -37,7 +38,7 @@ router.post("/signup",function (req, res) {
     var result = user_md.addUser(user);
 
     result.then(function (data) {
-        res.json({message:"insert Success!"});
+        res.redirect("/admin/signin");
     }).catch(function (error) {
         res.render("signup",{data:{error:"Could not inser data to DB"}});
     });
@@ -48,4 +49,39 @@ router.post("/signup",function (req, res) {
     // }
 
 });
+
+
+router.get("/signin",function (req, res){
+    res.render("signin",{data:{}});
+
+});
+router.post("/signin",function (req, res) {
+    var params = req.body;
+    console.log(params.password);
+    console.log(params.email);
+    if(params.email.trim().length==0){
+        res.render("signin",{data:{error:"Please enter an email"}});
+    }else {
+        var data = user_md.getUserByEmail(params.email);
+        if(data){
+            data.then(function (users) {
+                var user = users[0];
+                console.log("user la: ");
+                console.log(user);
+                var status = helper.compare_password(params.password,user.password);
+                console.log(params.password);
+                console.log(user.password);
+                if(!status){
+                    res.render("signin",{data:{error:"Password Wrong"}});
+                }else {
+                    res.redirect("/admin/");
+                }
+            });
+
+        }else {
+            res.render("signin",{data:{error:"User not exist"}});
+        }
+    }
+});
+
 module.exports = router;
