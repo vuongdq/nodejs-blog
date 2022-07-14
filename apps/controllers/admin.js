@@ -35,7 +35,6 @@ router.post("/signup",function (req, res) {
     //var result = user_md.addUser(user);
 
     var result = user_md.addUser(user);
-    console.log(user);
 
     result.then(function (data) {
         res.json({message:"insert Success!"});
