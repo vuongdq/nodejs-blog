@@ -23,7 +23,6 @@ router.post("/signup",function (req, res) {
     // Insert to DB
 
     var password = helper.hash_password(user.password);
-    console.log(password);
     user ={
         email: user.email,
         password:password,
