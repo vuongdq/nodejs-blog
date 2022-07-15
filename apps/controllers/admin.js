@@ -106,18 +106,70 @@ router.post("/post/new",function (req, res) {
     var now = new Date();
     params.created_at = now;
     params.updated_at = now;
-    var data = post_md.addPost(params);
+    if(params.title.trim().length==0){
+        res.render("admin/post/new",{data:{error:"Please enter a title"}});
+    }else {
+        var data = post_md.addPost(params);
 
 
-    data.then(function (result) {
-        res.redirect("/admin");
-    }).catch(function (err) {
-        var data = {
-            error:"Could not insert post"
-        };
-        res.render("admin/post/new",{data:data});
-        
-    });
+        data.then(function (result) {
+            res.redirect("/admin");
+        }).catch(function (err) {
+            var data = {
+                error:"Could not insert post"
+            };
+            res.render("admin/post/new",{data:data});
+
+        });
+    }
+
+
 
 });
+
+router.get("/post/edit/:id",function (req, res) {
+    var params = req.params;
+    var id = params.id;
+    var data = post_md.getPostById(id);
+    if(data){
+        data.then(function (posts){
+            var post = posts[0];
+            var data = {
+                post:post,
+                error:false
+            };
+            res.render("admin/post/edit",{data:data});
+        }).catch(function (err) {
+            var data ={
+                error: "could not get post by ID"
+            }
+            res.render("admin/post/edit",{data:data});
+        });
+    }else {
+        var data ={
+            error: "could not get post by ID"
+        }
+        res.render("admin/post/edit",{data:data});
+    }
+
+    
+})
+
+router.put("/post/edit",function (req, res) {
+    var params = req.body;
+    data = post_md.updatePost(params);
+    console.log(params.title);
+    if(!data){
+        res.json({status_code:500});
+    }else {
+        data.then(function (result) {
+            res.json({status_code:200});
+        }).catch(function (err) {
+            res.json({status_code:500});
+        })
+
+    }
+})
+
+
 module.exports = router;

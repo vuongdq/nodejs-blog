@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <%- include('../layout/head'); -%>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Edit Post</title>
+
+</head>
+<body>
+<%- include('../layout/nav'); -%>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Update Post Content
+    </div>
+    <div class="panel-body">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <form role="form" method="" action="">
+                    <input class="id" type="hidden" name="id" value="<%if (data && data.post){%><%= data.post.id%><%}%>">
+                    <div id="signupalert" style="<%if(!data ||!data.error){%>display: none;<%}%>" class="alert alert-danger">
+                        <p>Error:</p>
+                        <%if (data && data.error){%>
+                            <span><%= data.error %></span>
+                        <%}%>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input class="form-control title" name="title" placeholder="Title" value="<%if (data && data.post){%><%= data.post.title%><%}%>">
+                        <p class="help-block">Title</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea class="form-control content" name="content" placeholder="Content">
+                            <%if (data && data.post){%><%= data.post.content%><%}%>
+                        </textarea>
+                        <p class="help-block">Content</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Author</label>
+                        <input class="form-control author" name="author" placeholder="author" value="<%if (data && data.post){%><%= data.post.author%><%}%>">
+                        <p class="help-block">Author</p>
+                    </div>
+                    <button type="submit" class="btn btn-success post_edit">Update</button>
+                    <button type="submit" class="btn btn-success post_edit2">Update2</button>
+                </form>
+            </div>
+        </div>
+        <!-- /.row (nested) -->
+    </div>
+    <!-- /.panel-body -->
+</div>
+<script type="text/javascript" src="/static/js/post.js"></script>
+<script type="text/javascript" src="/static/js/test.js"></script>
+</body>
+</html>
